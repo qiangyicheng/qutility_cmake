@@ -8,7 +8,7 @@ if(${CUDAToolkit_FOUND})
         cuda.h
     )
     target_link_libraries(${CURRENT_TARGET_NAME} INTERFACE CUDA::cudart)
-    target_include_directories(${CURRENT_TARGET_NAME} INTERFACE ${CUDAToolkit_LIBRARY_DIR}/samples/common/inc/)
+    target_include_directories(${CURRENT_TARGET_NAME} INTERFACE ${CUDAToolkit_BIN_DIR}/../samples/common/inc/)
 endif()
 
 if(${hip_FOUND} AND ${rocthrust_FOUND})
