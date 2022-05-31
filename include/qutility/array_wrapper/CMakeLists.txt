@@ -3,7 +3,6 @@ add_library(${CURRENT_TARGET_NAME} INTERFACE)
 
 find_package(Boost 1.61)
 
-find_package(CUDAToolkit)
 find_package(hip QUIET)
 find_package(rocthrust QUIET)
 

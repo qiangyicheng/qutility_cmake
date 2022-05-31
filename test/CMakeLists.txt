@@ -12,15 +12,30 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(
-  array_wrapper_cpu_test
-  array_wrapper_cpu_test.cpp
+    array_wrapper_cpu_test
+    array_wrapper_cpu_test.cpp
 )
 
 target_link_libraries(array_wrapper_cpu_test
-  PRIVATE 
-  ${PROJECT_NAME}
-  gtest_main
+    PRIVATE 
+    ${PROJECT_NAME}
+    gtest_main
 )
 
 include(GoogleTest)
 gtest_discover_tests(array_wrapper_cpu_test)
+
+if(${CUDAToolkit_FOUND})
+    add_executable(
+        array_wrapper_gpu_test
+        array_wrapper_cpu_test.cu
+    )
+
+    target_link_libraries(array_wrapper_gpu_test
+        PRIVATE 
+        ${PROJECT_NAME}
+        gtest_main
+    )
+
+    gtest_discover_tests(array_wrapper_gpu_test)
+endif()

@@ -6,7 +6,13 @@ cmake_minimum_required(VERSION 3.14)
 set (CMAKE_CXX_STANDARD 17) 
 set (CMAKE_CXX_STANDARD_REQUIRED True)
 
-project (qutility)
+find_package(CUDAToolkit)
+
+if(${CUDAToolkit_FOUND})
+    project (qutility LANGUAGES CUDA CXX)
+else()
+    project (qutility LANGUAGES CXX)
+endif()
 
 add_library(${PROJECT_NAME} INTERFACE)
 target_include_directories(${PROJECT_NAME} INTERFACE include/)
