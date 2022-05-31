@@ -28,7 +28,7 @@ gtest_discover_tests(array_wrapper_cpu_test)
 if(${CUDAToolkit_FOUND})
     add_executable(
         array_wrapper_gpu_test
-        array_wrapper_cpu_test.cu
+        array_wrapper_gpu_test.cu
     )
 
     target_link_libraries(array_wrapper_gpu_test
