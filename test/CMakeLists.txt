@@ -12,15 +12,15 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(
-  dummy_test
-  dummy_test.cpp
+  array_wrapper_cpu_test
+  array_wrapper_cpu_test.cpp
 )
 
-target_link_libraries(dummy_test
+target_link_libraries(array_wrapper_cpu_test
   PRIVATE 
   ${PROJECT_NAME}
   gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(dummy_test)
+gtest_discover_tests(array_wrapper_cpu_test)
