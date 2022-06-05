@@ -54,33 +54,39 @@ namespace qutility {
 			using type = std::tuple<T, Args...>;
 		};
 
-		template <size_t n, typename ... Args>
-		struct first_n;
+		template <size_t n, typename TupleT, typename = void>
+		struct first_n_impl;
 
 		template <size_t n, typename First, typename ... Rest>
-		struct first_n<n, First, Rest...> {
+		struct first_n_impl<n, std::tuple<First, Rest...>, std::enable_if_t<n!=0>>{
 			static_assert(n <= sizeof...(Rest), "n must be smaller than the number of candidate types");
-			using type = typename prepend_tuple<First, typename first_n<n - 1, Rest...>::type>::type;
+			using type = typename prepend_tuple<First, typename first_n_impl<n - 1, std::tuple<Rest...>>::type>::type;
 		};
 
 		template <typename ... Rest>
-		struct first_n<0, Rest...> {
+		struct first_n_impl<0, std::tuple<Rest...>, void> {
 			using type = std::tuple<>;
 		};
 
 		template <size_t n, typename ... Args>
-		struct rest_n;
+		using first_n = first_n_impl<n, std::tuple<Args...>>;
+
+		template <size_t n, typename TupleT, typename = void>
+		struct rest_n_impl;
 
 		template<size_t n, typename First, typename... Rest>
-		struct rest_n<n, First, Rest...> {
+		struct rest_n_impl<n, std::tuple<First, Rest...>, std::enable_if_t<n!=0>> {
 			static_assert(n <= sizeof...(Rest), "n must be smaller than the number of candidate types");
-			using type = typename rest_n<n - 1, Rest...>::type;
+			using type = typename rest_n_impl<n - 1, std::tuple<Rest...>>::type;
 		};
 
 		template<typename ... Rest>
-		struct rest_n<0, Rest...> {
+		struct rest_n_impl<0, std::tuple<Rest...>> {
 			using type = std::tuple<Rest...>;
 		};
+
+		template <size_t n, typename ... Args>
+		using rest_n = rest_n_impl<n, std::tuple<Args...>>;
 
 		template<size_t pr, size_t pc, typename Requirements, typename Candidates>
 		struct is_correct_tuple_impl {
