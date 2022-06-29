@@ -205,5 +205,23 @@ namespace qutility {
 		constexpr inline c_array<T, (Ms + ...) > join(c_array<T, Ms> const & ... arrs) {
 			return (arrs && ...);
 		}
+
+		template <typename T, size_t M>
+		constexpr inline T maximum(c_array<T, M> const& arr) {
+			T ans = std::numeric_limits<T>::lowest();
+			for (size_t itr = 0; itr < M; ++itr) {
+				ans = ans > arr[itr] ? ans : arr[itr];
+			}
+			return ans;
+		}
+
+		template <size_t N, typename T, size_t M>
+		constexpr inline c_array<T, N> add_padding(c_array<T, M> const& arr) {
+			c_array<T, N> ans{};
+			for (size_t itr = 0; itr < M; ++itr) {
+				ans[itr] = arr[itr];
+			}
+			return ans;
+		}
 	}
 }
