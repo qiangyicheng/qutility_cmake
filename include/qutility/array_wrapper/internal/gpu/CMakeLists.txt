@@ -12,6 +12,7 @@ if(${CUDAToolkit_FOUND})
         message(STATUS "Header helper_cuda.h is found in ${CUDAToolkit_BIN_DIR}/../samples/common/inc/")
         target_include_directories(${CURRENT_TARGET_NAME} INTERFACE ${CUDAToolkit_BIN_DIR}/../samples/common/inc/)
     else()
+        message(STATUS "Header helper_cuda.h is not found in ${CUDAToolkit_BIN_DIR}/../samples/common/inc/. Fetch cuda-samples")
         include(FetchContent)
 
         FetchContent_Declare(cuda-samples
