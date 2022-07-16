@@ -21,7 +21,7 @@ if(${CUDAToolkit_FOUND})
         
         if(NOT cuda-samples_POPULATED)
             FetchContent_Populate(cuda-samples)
-            target_include_directories(${CURRENT_TARGET_NAME} INTERFACE ${cuda-samples_SOURCE_DIR}/common/inc)
+            target_include_directories(${CURRENT_TARGET_NAME} INTERFACE ${cuda-samples_SOURCE_DIR}/common)
         endif()
     endif()
 endif()
