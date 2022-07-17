@@ -53,6 +53,11 @@ namespace qutility {
 			return true;
 		}
 
+		template<class T1, class T2, size_t N1, size_t N2>
+		constexpr bool operator!=(c_array<T1, N1> const& lhs, c_array<T2, N2> const& rhs) {
+			return !(lhs == rhs);
+		}
+
 		template<class T, size_t N, 
 			typename = typename std::enable_if_t<qutility::ifmember::has_operator_left_shift<std::ostream&, T>::value>
 		>
