@@ -15,6 +15,7 @@ if(${CUDAToolkit_FOUND})
         message(STATUS "Header helper_cuda.h is not found in ${CUDAToolkit_BIN_DIR}/../samples/common/inc/. Fetch cuda-samples")
         include(FetchContent)
 
+        FetchContent_GetProperties(cuda-samples)
         FetchContent_Declare(cuda-samples
             GIT_REPOSITORY    https://github.com/NVIDIA/cuda-samples.git
             GIT_TAG           master
