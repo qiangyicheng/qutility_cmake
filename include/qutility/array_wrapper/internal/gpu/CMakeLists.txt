@@ -8,6 +8,7 @@ if(${CUDAToolkit_FOUND})
         cuda.h
     )
     target_link_libraries(${CURRENT_TARGET_NAME} INTERFACE CUDA::cudart)
+
     if(EXISTS "${CUDAToolkit_BIN_DIR}/../samples/common/inc/helper_cuda.h")
         message(STATUS "Header helper_cuda.h is found in ${CUDAToolkit_BIN_DIR}/../samples/common/inc/")
         target_include_directories(${CURRENT_TARGET_NAME} INTERFACE ${CUDAToolkit_BIN_DIR}/../samples/common/inc/)
@@ -15,17 +16,17 @@ if(${CUDAToolkit_FOUND})
         message(STATUS "Header helper_cuda.h is not found in ${CUDAToolkit_BIN_DIR}/../samples/common/inc/. Fetch cuda-samples")
         include(FetchContent)
 
-        FetchContent_GetProperties(cuda-samples)
         FetchContent_Declare(cuda-samples
-            GIT_REPOSITORY    https://github.com/NVIDIA/cuda-samples.git
-            GIT_TAG           master
+            GIT_REPOSITORY https://github.com/NVIDIA/cuda-samples.git
+            GIT_TAG master
         )
-        
+
+        FetchContent_GetProperties(cuda-samples)
         if(NOT cuda-samples_POPULATED)
             FetchContent_Populate(cuda-samples)
             message(STATUS "use cuda-samples headers in ${cuda-samples_SOURCE_DIR}/Common")
-            target_include_directories(${CURRENT_TARGET_NAME} INTERFACE ${cuda-samples_SOURCE_DIR}/Common)
         endif()
+        target_include_directories(${CURRENT_TARGET_NAME} INTERFACE ${cuda-samples_SOURCE_DIR}/Common)
     endif()
 endif()
 
