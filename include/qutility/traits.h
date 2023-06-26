@@ -130,7 +130,7 @@ namespace qutility {
 		};
 
 		template<typename T>
-		struct is_tytpe_T {
+		struct is_type_T {
 			template<typename U>
 			using apply = std::is_same<T, U>;
 		};

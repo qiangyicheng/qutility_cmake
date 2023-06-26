@@ -6,12 +6,16 @@
 #include <string>
 #include <type_traits>
 
+#include <boost/preprocessor/facilities/is_empty.hpp>
+
 namespace qutility {
 	namespace matio {
 		//templates for compatibility with restrict keyword
 		template < typename T > struct remove_restrict { typedef T type; };
 		template < typename T > struct remove_restrict<T*> { typedef T* type; };
+#if !defined(__restrict) || !BOOST_PP_IS_EMPTY(__restrict)
 		template < typename T > struct remove_restrict<T* __restrict> { typedef T* type; };
+#endif
 
 		//two different requiements
 		template <typename P>
