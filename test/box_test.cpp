@@ -104,3 +104,21 @@ TEST(Box, Box)
     constexpr auto lengths_compressed = box.shuffle_as_compress_index<double>({3.0, 6.0, 2.0, 0.1, 0.2, 0.3});
     EXPECT_EQ(lengths_compressed, (c_array<double, 6>{{6.0, 0.1, 0.2, 3.0, 2.0, 0.3}}));
 }
+
+TEST(Box, BoxWithLength)
+{
+    using qutility::c_array::c_array;
+    using BoxT = qutility::box::BoxWithLength<6>;
+    constexpr BoxT box{{4, 1, 6, 0, 1, 3}, {3.0, 6.0, 2.0, 0.1, 0.2, 0.3}};
+    EXPECT_EQ(72, box.original_box_.total_size_);
+    EXPECT_EQ(72, box.compressed_box_.total_size_);
+    EXPECT_EQ(48, box.compressed_box_.total_size_hermit_);
+
+    constexpr auto simple_stride = box.compressed_box_.stride_;
+    EXPECT_EQ(simple_stride, (c_array<std::size_t, 6>{{72, 72, 72, 18, 3, 1}}));
+
+    constexpr auto lengths_compressed = box.compressed_box_length_;
+    EXPECT_EQ(lengths_compressed, (c_array<double, 6>{{6.0, 0.1, 0.2, 3.0, 2.0, 0.3}}));
+
+    EXPECT_EQ(box.compressed_box_discretization_, (c_array<double, 6>{{6.0, 0.1, 0.2, 3.0 / 4, 2.0 / 6, 0.3 / 3}}));
+}

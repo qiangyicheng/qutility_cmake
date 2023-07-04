@@ -10,6 +10,7 @@ namespace qutility
         namespace detail
         {
             using qutility::c_array::c_array;
+            using qutility::c_array::product;
 
             template <typename ValT, std::size_t N>
             constexpr inline auto count_non_unit(const c_array<ValT, N> &arr) -> std::size_t
@@ -25,18 +26,6 @@ namespace qutility
                     }
                 }
                 return count;
-            }
-
-            template <typename ValT, std::size_t N>
-            constexpr inline auto product(const c_array<ValT, N> &arr) -> ValT
-            {
-                static_assert(std::is_integral<ValT>::value, "It makes no sense to using non-integral type as the mesh size.");
-                ValT ans = (ValT)1;
-                for (const auto &ele : arr)
-                {
-                    ans *= ele;
-                }
-                return ans;
             }
 
             template <typename ValT, std::size_t N>
@@ -198,5 +187,26 @@ namespace qutility
             }
         };
 
+        template <std::size_t Dim, typename ValT = std::size_t, typename LengthValT = double>
+        struct BoxWithLength : public Box<Dim, ValT>
+        {
+            using val_t = ValT;
+            using length_val_t = LengthValT;
+            using BoxT = Box<Dim, ValT>;
+            static constexpr std::size_t dim_ = Dim;
+            constexpr BoxWithLength(c_array<ValT, Dim> box_size, c_array<LengthValT, Dim> box_length)
+                : BoxT(box_size),
+                  box_length_(box_length),
+                  box_discretization_(box_length_ / this->original_box_.box_size_),
+                  compressed_box_length_(this->shuffle_as_compress_index(box_length_)),
+                  compressed_box_discretization_(compressed_box_length_ / this->compressed_box_.box_size_)
+            {
+            }
+            /* data */
+            const c_array<LengthValT, Dim> box_length_;
+            const c_array<LengthValT, Dim> box_discretization_;
+            const c_array<LengthValT, Dim> compressed_box_length_;
+            const c_array<LengthValT, Dim> compressed_box_discretization_;
+        };
     }
 }

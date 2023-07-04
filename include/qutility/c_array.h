@@ -215,6 +215,32 @@ namespace qutility
 			constexpr static c_array<T, N + 1> apply(c_array<T, N> const &p) { return append(p, e); }
 		};
 
+		template <class T, size_t N>
+		constexpr T product(c_array<T, N> const &a)
+		{
+			using AnsT = T;
+			AnsT ans = (AnsT)1;
+			if constexpr (N != 0)
+				for (size_t itr = 0; itr < N; ++itr)
+				{
+					ans *= a[itr];
+				}
+			return ans;
+		}
+
+		template <class T, size_t N>
+		constexpr T sum(c_array<T, N> const &a)
+		{
+			using AnsT = T;
+			AnsT ans = (AnsT)0;
+			if constexpr (N != 0)
+				for (size_t itr = 0; itr < N; ++itr)
+				{
+					ans += a[itr];
+				}
+			return ans;
+		}
+
 		template <class T, class U, size_t N>
 		constexpr decltype(std::declval<T>() * std::declval<U>()) inner_product(c_array<T, N> const &a, c_array<U, N> const &b)
 		{
@@ -228,6 +254,59 @@ namespace qutility
 			return ans;
 		}
 
+		template <class T, class U, size_t N>
+		constexpr inline auto operator+(c_array<T, N> const &a, c_array<U, N> const &b)
+		{
+			using AnsValT = decltype(std::declval<T>() + std::declval<U>());
+			using AnsT = c_array<AnsValT, N>;
+			AnsT ans{};
+			for (size_t itr = 0; itr < N; ++itr)
+			{
+				ans[itr] = a[itr] + b[itr];
+			}
+			return ans;
+		}
+
+		template <class T, class U, size_t N>
+		constexpr inline auto operator-(c_array<T, N> const &a, c_array<U, N> const &b)
+		{
+			using AnsValT = decltype(std::declval<T>() - std::declval<U>());
+			using AnsT = c_array<AnsValT, N>;
+			AnsT ans{};
+			for (size_t itr = 0; itr < N; ++itr)
+			{
+				ans[itr] = a[itr] - b[itr];
+			}
+			return ans;
+		}
+
+		template <class T, class U, size_t N>
+		constexpr inline auto operator*(c_array<T, N> const &a, c_array<U, N> const &b)
+		{
+			using AnsValT = decltype(std::declval<T>() * std::declval<U>());
+			using AnsT = c_array<AnsValT, N>;
+			AnsT ans{};
+			for (size_t itr = 0; itr < N; ++itr)
+			{
+				ans[itr] = a[itr] * b[itr];
+			}
+			return ans;
+		}
+
+		template <class T, class U, size_t N>
+		constexpr inline auto operator/(c_array<T, N> const &a, c_array<U, N> const &b)
+		{
+			using AnsValT = decltype(std::declval<T>() / std::declval<U>());
+			using AnsT = c_array<AnsValT, N>;
+			AnsT ans{};
+			for (size_t itr = 0; itr < N; ++itr)
+			{
+				ans[itr] = a[itr] / b[itr];
+			}
+			return ans;
+		}
+
+		// CAUTION: operator&& is used as join to array, instead of operator "and"
 		template <typename T, size_t M, size_t N>
 		constexpr inline c_array<T, M + N> operator&&(c_array<T, M> const &lhs, c_array<T, N> const &rhs)
 		{
