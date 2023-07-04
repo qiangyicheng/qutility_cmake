@@ -10,7 +10,9 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 enable_testing()
+include(GoogleTest)
 
+# array_wrapper_cpu
 add_executable(
     array_wrapper_cpu_test
     array_wrapper_cpu_test.cpp
@@ -22,9 +24,9 @@ target_link_libraries(array_wrapper_cpu_test
     gtest_main
 )
 
-include(GoogleTest)
 gtest_discover_tests(array_wrapper_cpu_test)
 
+# array_wrapper_gpu
 if(${CUDAToolkit_FOUND})
     add_executable(
         array_wrapper_gpu_test
@@ -39,3 +41,17 @@ if(${CUDAToolkit_FOUND})
 
     gtest_discover_tests(array_wrapper_gpu_test)
 endif()
+
+# dim
+add_executable(
+    box_test
+    box_test.cpp
+)
+
+target_link_libraries(box_test
+    PRIVATE 
+    ${PROJECT_NAME}
+    gtest_main
+)
+
+gtest_discover_tests(box_test)

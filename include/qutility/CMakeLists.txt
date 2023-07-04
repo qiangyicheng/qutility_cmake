@@ -14,4 +14,5 @@ target_sources(${PROJECT_NAME}
     message.h
     qutility.h
     traits.h
+    box.h
 )
