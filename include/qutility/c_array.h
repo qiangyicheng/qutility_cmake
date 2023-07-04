@@ -24,6 +24,17 @@ namespace qutility
 				return arr[p];
 			}
 
+			template <typename T2, typename = std::enable_if_t<std::is_convertible_v<T, T2>>>
+			constexpr operator c_array<T2, N>() const
+			{
+				c_array<T2, N> ans{};
+				for (std::size_t itr = 0; itr < N; ++itr)
+				{
+					ans[itr] = arr[itr];
+				}
+				return ans;
+			}
+
 			constexpr T const *begin() const
 			{
 				return arr + 0;
