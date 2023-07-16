@@ -2,9 +2,10 @@
 
 include(FetchContent)
 FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/2f80c2ba71c0e8922a03b9b855e5b019ad1f7064.zip
+    googletest
+    URL https://github.com/google/googletest/archive/2f80c2ba71c0e8922a03b9b855e5b019ad1f7064.zip
 )
+
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
@@ -13,45 +14,63 @@ enable_testing()
 include(GoogleTest)
 
 # array_wrapper_cpu
+set(CURRENT_TEST_NAME array_wrapper_cpu)
 add_executable(
-    array_wrapper_cpu_test
-    array_wrapper_cpu_test.cpp
+    ${CURRENT_TEST_NAME}_test
+    ${CURRENT_TEST_NAME}_test.cpp
 )
 
-target_link_libraries(array_wrapper_cpu_test
-    PRIVATE 
+target_link_libraries(${CURRENT_TEST_NAME}_test
+    PRIVATE
     ${PROJECT_NAME}
     gtest_main
 )
 
-gtest_discover_tests(array_wrapper_cpu_test)
+gtest_discover_tests(${CURRENT_TEST_NAME}_test)
 
 # array_wrapper_gpu
 if(${CUDAToolkit_FOUND})
+    set(CURRENT_TEST_NAME array_wrapper_gpu)
     add_executable(
-        array_wrapper_gpu_test
-        array_wrapper_gpu_test.cu
+        ${CURRENT_TEST_NAME}_test
+        ${CURRENT_TEST_NAME}_test.cu
     )
 
-    target_link_libraries(array_wrapper_gpu_test
-        PRIVATE 
+    target_link_libraries(${CURRENT_TEST_NAME}_test
+        PRIVATE
         ${PROJECT_NAME}
         gtest_main
     )
 
-    gtest_discover_tests(array_wrapper_gpu_test)
+    gtest_discover_tests(${CURRENT_TEST_NAME}_test)
 endif()
 
-# dim
+# box
+set(CURRENT_TEST_NAME box)
 add_executable(
-    box_test
-    box_test.cpp
+    ${CURRENT_TEST_NAME}_test
+    ${CURRENT_TEST_NAME}_test.cpp
 )
 
-target_link_libraries(box_test
-    PRIVATE 
+target_link_libraries(${CURRENT_TEST_NAME}_test
+    PRIVATE
     ${PROJECT_NAME}
     gtest_main
 )
 
-gtest_discover_tests(box_test)
+gtest_discover_tests(${CURRENT_TEST_NAME}_test)
+
+# cml_opt
+set(CURRENT_TEST_NAME cml_opt)
+add_executable(
+    ${CURRENT_TEST_NAME}_test
+    ${CURRENT_TEST_NAME}_test.cpp
+)
+
+target_link_libraries(${CURRENT_TEST_NAME}_test
+    PRIVATE
+    ${PROJECT_NAME}
+    gtest_main
+)
+
+gtest_discover_tests(${CURRENT_TEST_NAME}_test)
