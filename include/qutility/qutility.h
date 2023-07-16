@@ -9,3 +9,4 @@
 #include "array_wrapper.h"
 #include "history.h"
 #include "getopt.h"
+#include "cml_opt.h"
