@@ -74,3 +74,18 @@ target_link_libraries(${CURRENT_TEST_NAME}_test
 )
 
 gtest_discover_tests(${CURRENT_TEST_NAME}_test)
+
+# traits
+set(CURRENT_TEST_NAME traits)
+add_executable(
+    ${CURRENT_TEST_NAME}_test
+    ${CURRENT_TEST_NAME}_test.cpp
+)
+
+target_link_libraries(${CURRENT_TEST_NAME}_test
+    PRIVATE
+    ${PROJECT_NAME}
+    gtest_main
+)
+
+gtest_discover_tests(${CURRENT_TEST_NAME}_test)

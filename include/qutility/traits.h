@@ -153,5 +153,23 @@ namespace qutility
 			template <typename U>
 			using apply = std::is_same<T, U>;
 		};
+
+		template <typename FuncT>
+		struct func_args_tuple_impl;
+
+		template <typename ReturnT, typename... ArgTs>
+		struct func_args_tuple_impl<ReturnT(ArgTs...)>
+		{
+			using type = std::tuple<ArgTs...>;
+		};
+
+		template <typename ReturnT, typename... ArgTs>
+		struct func_args_tuple_impl<ReturnT (*)(ArgTs...)>
+		{
+			using type = std::tuple<ArgTs...>;
+		};
+
+		template <typename FuncT>
+		using func_args_tuple = typename func_args_tuple_impl<FuncT>::type;
 	}
 }
