@@ -18,4 +18,5 @@ target_sources(${PROJECT_NAME}
     traits.h
     box.h
     cml_opt.h
+    tuple_utility.h
 )
