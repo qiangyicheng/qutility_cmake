@@ -170,6 +170,6 @@ namespace qutility
 		};
 
 		template <typename FuncT>
-		using func_args_tuple = typename func_args_tuple_impl<FuncT>::type;
+		using func_args_tuple = typename func_args_tuple_impl<std::remove_reference_t<FuncT>>::type;
 	}
 }
