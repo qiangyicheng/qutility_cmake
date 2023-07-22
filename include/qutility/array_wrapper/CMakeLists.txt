@@ -42,4 +42,5 @@ target_sources(${PROJECT_NAME}
     INTERFACE
     array_wrapper_cpu.h
     array_wrapper_gpu.h
+    array_wrapper_gpu_declare.h
 )

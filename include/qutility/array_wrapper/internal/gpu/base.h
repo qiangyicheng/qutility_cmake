@@ -74,10 +74,7 @@ namespace qutility {
 			T* const pointer_;
 		};
 
-		template <class T>
-		using ArrayGPU = DArrayGPU<T>;
-
-		template <class T, std::size_t A = 64>
+		template <class T, std::size_t A>
 		class DArrayDDRPinned : public DArrayDDR<T, A> {
 		public:
 			DArrayDDRPinned() = delete;
@@ -97,9 +94,6 @@ namespace qutility {
 			void register_host_memory() { qutilityGPUCheckErrors(qutilityGPUHostRegister((void*)pointer_, size_ * sizeof(T), qutilityGPUHostRegisterDefault)); }
 			void unregister_host_memory() { qutilityGPUCheckErrors(qutilityGPUHostUnregister((void*)pointer_)); }
 		};
-
-		template <class T, std::size_t A = 64>
-		using ArrayDDRPinned = DArrayDDRPinned<T, A>;
 
 		template<
 			class DstArrayT, class SrcArrayT,

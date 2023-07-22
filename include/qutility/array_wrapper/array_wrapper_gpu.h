@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "array_wrapper_gpu_declare.h"
+
 #ifndef QUTILITY_ARRAY_WRAPPER_DISABLE_GPU_WRAPPER
 
 #ifdef QUTILITY_ARRAY_WRAPPER_GPU_USE_CUDA
