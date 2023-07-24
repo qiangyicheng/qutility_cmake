@@ -119,10 +119,6 @@ namespace qutility
 
         }
 
-        /// @brief this class will construct the description of a computational box. \
-        Any size of 0 will be considered as 1.\
-        Two versions of the box will be kept, one for the original one, the other one for the compressed one: any dim<=1 will be dropped.
-
         using qutility::c_array::c_array;
 
         template <std::size_t Dim, typename ValT = std::size_t>
@@ -157,6 +153,9 @@ namespace qutility
             const ValT outer_size_hermit_;
         };
 
+        /// @brief this class will construct the description of a computational box. \
+        Any size of 0 will be considered as 1.\
+        Two versions of the box will be kept, one for the original one, the other one for the compressed one: any dim<=1 will be dropped.
         template <std::size_t Dim, typename ValT = std::size_t>
         struct Box
         {
