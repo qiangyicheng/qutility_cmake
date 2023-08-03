@@ -122,3 +122,16 @@ TEST(Box, BoxWithLength)
 
     EXPECT_EQ(box.compressed_box_discretization_, (c_array<double, 6>{{6.0, 0.1, 0.2, 3.0 / 4, 2.0 / 6, 0.3 / 3}}));
 }
+
+TEST(Box, BoxCompileTime)
+{
+    using qutility::c_array::c_array;
+    using BoxT = qutility::box::BoxCTWithLength<6, 4, 1, 6, 0, 1, 3>;
+    BoxT box{};
+    EXPECT_EQ(72, BoxT::box_.original_box_.total_size_);
+    EXPECT_EQ(72, BoxT::box_.compressed_box_.total_size_);
+    EXPECT_EQ(48, BoxT::box_.compressed_box_.total_size_hermit_);
+    EXPECT_EQ(72, box.length_.original_box_.total_size_);
+    EXPECT_EQ(72, box.length_.compressed_box_.total_size_);
+    EXPECT_EQ(48, box.length_.compressed_box_.total_size_hermit_);
+}

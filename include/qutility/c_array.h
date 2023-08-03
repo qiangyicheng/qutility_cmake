@@ -351,5 +351,16 @@ namespace qutility
 			}
 			return ans;
 		}
+
+		template <typename T, size_t M>
+		constexpr inline c_array<T, M> copy_of(T const &val)
+		{
+			c_array<T, M> ans{};
+			for (size_t itr = 0; itr < M; ++itr)
+			{
+				ans[itr] = val;
+			}
+			return ans;
+		}
 	}
 }

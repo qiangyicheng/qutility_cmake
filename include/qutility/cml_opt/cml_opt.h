@@ -25,8 +25,8 @@ namespace qutility
             using jsobject_T = boost::json::object;
 
         protected:
-            template <typename ValT>
-            static std::string to_string(const ValT &val) { return std::to_string(val); }
+            template <typename val_t>
+            static std::string to_string(const val_t &val) { return std::to_string(val); }
             static std::string to_string(const std::string &str) { return str; }
         };
 
