@@ -34,9 +34,9 @@ namespace qutility
         void obtain_cml_options(int argc, const char *const *argv, OptionsDerivedT &opts)
         {
             namespace po = boost::program_options;
+            po::options_description desc("Allowed options");
             try
             {
-                po::options_description desc("Allowed options");
                 desc.add_options()("help", "generate help information");
                 opts.register_all(desc);
                 po::variables_map vm;
@@ -52,6 +52,7 @@ namespace qutility
             catch (po::error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cout << desc << "\n";
                 exit(-1);
             }
         }
