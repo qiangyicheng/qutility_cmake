@@ -100,7 +100,7 @@ namespace qutility {
 
 		template< typename T>
 		void ReadMatrix(std::ifstream& ifs, MyPair<T, size_t> First) {
-			std::cout << "REPORT: reading " << First.second << " elements to 0x" << std::hex << First.first << std::dec << std::endl;
+			// std::cout << "REPORT: reading " << First.second << " elements to 0x" << std::hex << First.first << std::dec << std::endl;
 			ifs.read((char*)First.first, sizeof(typename std::remove_pointer<typename remove_restrict<T>::type>::type) * First.second);
 			if (ifs.rdstate() != std::ios_base::goodbit) {
 				std::cout << "ERROR: ifstream error when reading " << First.second << " elements to 0x" << std::hex << First.first << std::dec << std::endl;
@@ -111,7 +111,7 @@ namespace qutility {
 
 		template< typename T, typename... Arg >
 		void ReadMatrix(std::ifstream& ifs, MyPair<T, size_t> First, MyPair<Arg, size_t>... Rest) {
-			std::cout << "REPORT: reading " << First.second << " elements to 0x" << std::hex << First.first << std::dec << std::endl;
+			// std::cout << "REPORT: reading " << First.second << " elements to 0x" << std::hex << First.first << std::dec << std::endl;
 			ifs.read((char*)First.first, sizeof(typename std::remove_pointer<typename remove_restrict<T>::type>::type) * First.second);
 			if (ifs.rdstate() != std::ios_base::goodbit) {
 				std::cout << "ERROR: ifstream error when reading " << First.second << " elements to 0x" << std::hex << First.first << std::dec << std::endl;
