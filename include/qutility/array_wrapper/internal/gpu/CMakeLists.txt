@@ -17,7 +17,7 @@ if(${CUDAToolkit_FOUND})
         include(FetchContent)
 
         FetchContent_Declare(cuda-samples
-            GIT_REPOSITORY https://github.com/NVIDIA/cuda-samples.git
+            GIT_REPOSITORY git@github.com:NVIDIA/cuda-samples.git
             GIT_TAG master
         )
 
