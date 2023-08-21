@@ -2,6 +2,7 @@
 
 #include <type_traits>
 #include <iostream>
+#include <limits>
 
 #include "ifmember.h"
 
