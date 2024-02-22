@@ -242,6 +242,74 @@ namespace qutility
 			return ans;
 		}
 
+		template <class T, size_t N>
+		constexpr c_array<T, N> prefix_sum(c_array<T, N> const &a)
+		{
+			using AnsT = c_array<T, N>;
+			AnsT ans{};
+			if constexpr (N != 0)
+			{
+				T temp = 0;
+				for (size_t itr = 0; itr < N; ++itr)
+				{
+					ans[itr] = temp;
+					temp += a[itr];
+				}
+			}
+			return ans;
+		}
+
+		template <class T, size_t N>
+		constexpr c_array<T, N> suffix_sum(c_array<T, N> const &a)
+		{
+			using AnsT = c_array<T, N>;
+			AnsT ans{};
+			if constexpr (N != 0)
+			{
+				T temp = 0;
+				for (size_t itr = 0; itr < N; ++itr)
+				{
+					ans[N - 1 - itr] = temp;
+					temp += a[N - 1 - itr];
+				}
+			}
+			return ans;
+		}
+
+		template <class T, size_t N>
+		constexpr c_array<T, N> prefix_product(c_array<T, N> const &a)
+		{
+			using AnsT = c_array<T, N>;
+			AnsT ans{};
+			if constexpr (N != 0)
+			{
+				T temp = 1;
+				for (size_t itr = 0; itr < N; ++itr)
+				{
+					ans[itr] = temp;
+					temp *= a[itr];
+				}
+			}
+			return ans;
+		}
+
+		template <class T, size_t N>
+		constexpr c_array<T, N> suffix_product(c_array<T, N> const &a)
+		{
+			using AnsT = c_array<T, N>;
+			AnsT ans{};
+			if constexpr (N != 0)
+			{
+				T temp = 1;
+				for (size_t itr = 0; itr < N; ++itr)
+				{
+					ans[N - 1 - itr] = temp;
+					temp *= a[N - 1 - itr];
+				}
+			}
+			return ans;
+		}
+
 		template <class T, class U, size_t N>
 		constexpr decltype(std::declval<T>() * std::declval<U>()) inner_product(c_array<T, N> const &a, c_array<U, N> const &b)
 		{

@@ -10,7 +10,9 @@ namespace qutility
         namespace detail
         {
             using qutility::c_array::c_array;
+            using qutility::c_array::prefix_product;
             using qutility::c_array::product;
+            using qutility::c_array::suffix_product;
 
             template <typename val_t, std::size_t N>
             constexpr inline auto count_non_unit(const c_array<val_t, N> &arr) -> std::size_t
@@ -132,6 +134,9 @@ namespace qutility
                   stride_(detail::stride(box_size_)),          // here use the non-zero version
                   box_size_hermit_(detail::hermit(box_size_)), // here use the non-zero version
                   stride_hermit_(detail::stride(box_size_hermit_)),
+                  outer_size_of_(detail::prefix_product(box_size_)),
+                  inner_size_of_(detail::suffix_product(box_size_)),
+                  inner_size_hermit_of_(detail::suffix_product(box_size_hermit_)),
                   total_size_(detail::product(box_size_)),
                   total_size_hermit_(detail::product(box_size_hermit_)),
                   last_size_(box_size_[dim_ - 1]),
@@ -146,6 +151,9 @@ namespace qutility
             // size of box with Hermitian symmetry
             const c_array<val_t, dim_> box_size_hermit_;
             const c_array<val_t, dim_> stride_hermit_;
+            const c_array<val_t, dim_> outer_size_of_;
+            const c_array<val_t, dim_> inner_size_of_;
+            const c_array<val_t, dim_> inner_size_hermit_of_;
             const val_t total_size_;
             const val_t total_size_hermit_;
             const val_t last_size_;
@@ -154,16 +162,21 @@ namespace qutility
             const val_t outer_size_hermit_;
         };
 
-        /// @brief this class will construct the description of a computational box. \
-        Any size of 0 will be considered as 1.\
-        Two versions of the box will be kept, one for the original one, the other one for the compressed one: any dim<=1 will be dropped.
+        /// @brief this class will construct the description of a computational box. 
+        ///        Any size of 0 will be considered as 1.
+        ///        Two versions of the box will be kept, one for the original one, the other one for the compressed one: any dim<=1 will be dropped.
+        ///        The direct members are the compressed ones.
+        /// @tparam ValT 
+        /// @tparam Dim 
         template <std::size_t Dim, typename ValT = std::size_t>
-        struct Box
+        struct Box : public BoxBase<Dim, ValT>
         {
             using val_t = ValT;
             static constexpr std::size_t dim_ = Dim;
+            using BoxBaseT = BoxBase<dim_, val_t>;
             constexpr Box(c_array<val_t, dim_> box_size)
-                : original_box_(box_size),
+                : BoxBaseT(detail::compress(box_size)),
+                  original_box_(box_size),
                   compressed_box_(detail::compress(box_size)),
                   compress_index_(detail::arg_compress(box_size)),
                   useful_dim_(detail::count_non_unit(box_size))
@@ -199,7 +212,9 @@ namespace qutility
                   original_box_length_(box_length),
                   original_box_discretization_(original_box_length_ / this->original_box_.box_size_),
                   compressed_box_length_(this->shuffle_as_compress_index(original_box_length_)),
-                  compressed_box_discretization_(compressed_box_length_ / this->compressed_box_.box_size_)
+                  compressed_box_discretization_(compressed_box_length_ / this->compressed_box_.box_size_),
+                  box_length_(compressed_box_length_),
+                  box_discretization_(compressed_box_discretization_)
             {
             }
             constexpr BoxWithLength(c_array<val_t, dim_> box_size)
@@ -218,6 +233,8 @@ namespace qutility
             c_array<length_val_t, dim_> original_box_discretization_;
             c_array<length_val_t, dim_> compressed_box_length_;
             c_array<length_val_t, dim_> compressed_box_discretization_;
+            c_array<length_val_t, dim_> box_length_;
+            c_array<length_val_t, dim_> box_discretization_;
         };
 
         /// @brief Box at compile time. Note that the internal int type is fixed to be std::size_t
