@@ -118,34 +118,34 @@ namespace qutility
 
 #ifndef QUTILITY_REGISTER_OPTION
 
-#define QUTILITY_REGISTER_OPTION_IMPL_VALUE_AND_COMMON_FUNCTIONS(type, name, tag) \
-public:                                                                           \
-    type name;                                                                    \
-                                                                                  \
-protected:                                                                        \
-    constexpr static const char *name##_tag = tag;                                \
-    void name##_get_func(const vm_T &vm, bool if_override)                        \
-    {                                                                             \
-        auto val = vm[name##_tag].as<type>();                                     \
-        if (if_override || (!vm[name##_tag].defaulted()))                         \
-        {                                                                         \
-            name = val;                                                           \
-        }                                                                         \
-    }                                                                             \
-    std::pair<std::string, std::string> name##_str_func() const                   \
-    {                                                                             \
-        return {name##_tag, to_string(name)};                                     \
-    }                                                                             \
-    void name##_json_insert_func(jsobject_T &obj) const                           \
-    {                                                                             \
-        obj[name##_tag] = name;                                                   \
-    }                                                                             \
-    void name##_json_obtain_func(const jsobject_T &obj)                           \
-    {                                                                             \
-        if (obj.find(name##_tag) != obj.end())                                    \
-        {                                                                         \
-            name = qutility::cml_opt::get_json_value<type>(obj, name##_tag);      \
-        }                                                                         \
+#define QUTILITY_REGISTER_OPTION_IMPL_VALUE_AND_COMMON_FUNCTIONS(type, name, tag, cml_token) \
+public:                                                                                      \
+    type name;                                                                               \
+                                                                                             \
+protected:                                                                                   \
+    constexpr static const char *name##_tag = cml_token;                                     \
+    void name##_get_func(const vm_T &vm, bool if_override)                                   \
+    {                                                                                        \
+        auto val = vm[name##_tag].as<type>();                                                \
+        if (if_override || (!vm[name##_tag].defaulted()))                                    \
+        {                                                                                    \
+            name = val;                                                                      \
+        }                                                                                    \
+    }                                                                                        \
+    std::pair<std::string, std::string> name##_str_func() const                              \
+    {                                                                                        \
+        return {name##_tag, to_string(name)};                                                \
+    }                                                                                        \
+    void name##_json_insert_func(jsobject_T &obj) const                                      \
+    {                                                                                        \
+        obj[name##_tag] = name;                                                              \
+    }                                                                                        \
+    void name##_json_obtain_func(const jsobject_T &obj)                                      \
+    {                                                                                        \
+        if (obj.find(name##_tag) != obj.end())                                               \
+        {                                                                                    \
+            name = qutility::cml_opt::get_json_value<type>(obj, name##_tag);                 \
+        }                                                                                    \
     }
 
 #define QUTILITY_REGISTER_OPTION_IMPL_REGISTER_FUNCTION_WITH_DEFAULT(type, name, cml_token, default, desc) \
@@ -177,12 +177,12 @@ protected:                                                                      
         &class_name::name##_json_obtain_func);
 
 #define QUTILITY_REGISTER_OPTION_WITH_DEFAULT(class_name, type, name, tag, cml_token, default, desc)   \
-    QUTILITY_REGISTER_OPTION_IMPL_VALUE_AND_COMMON_FUNCTIONS(type, name, tag)                          \
+    QUTILITY_REGISTER_OPTION_IMPL_VALUE_AND_COMMON_FUNCTIONS(type, name, tag, cml_token)               \
     QUTILITY_REGISTER_OPTION_IMPL_REGISTER_FUNCTION_WITH_DEFAULT(type, name, cml_token, default, desc) \
     QUTILITY_REGISTER_OPTION_IMPL_STUB(class_name, name)
 
 #define QUTILITY_REGISTER_OPTION_REQUIRED(class_name, type, name, tag, cml_token, desc)   \
-    QUTILITY_REGISTER_OPTION_IMPL_VALUE_AND_COMMON_FUNCTIONS(type, name, tag)             \
+    QUTILITY_REGISTER_OPTION_IMPL_VALUE_AND_COMMON_FUNCTIONS(type, name, tag, cml_token)  \
     QUTILITY_REGISTER_OPTION_IMPL_REGISTER_FUNCTION_REQUIRED(type, name, cml_token, desc) \
     QUTILITY_REGISTER_OPTION_IMPL_STUB(class_name, name)
 

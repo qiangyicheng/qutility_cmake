@@ -18,8 +18,8 @@ public:
 
 TEST(CmlOpt, ReadOptions)
 {
-    constexpr int test_argc = 5;
-    const char *test_argv[test_argc] = {"??not important", "--str=hahaha", "--i=42", "--d=0.233", "--help"};
+    constexpr int test_argc = 4;
+    const char *test_argv[test_argc] = {"??not important", "--str=hahaha", "--i=42", "--d=0.233"};
     TestOptions opts;
 
     qutility::cml_opt::obtain_cml_options(test_argc, test_argv, opts);
