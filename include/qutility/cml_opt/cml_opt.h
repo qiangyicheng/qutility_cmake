@@ -249,6 +249,15 @@ public:                                                                        \
         }                                                                      \
         os << std::endl;                                                       \
     }                                                                          \
+    void print_all_cml_style(std::ostream &os)                                 \
+    {                                                                          \
+        for (const auto &ele : str_funcs_)                                     \
+        {                                                                      \
+            auto ans = std::invoke(ele, *this);                                \
+            os << "--" << ans.first << "=" << ans.second << " ";               \
+        }                                                                      \
+        os << std::endl;                                                       \
+    }                                                                          \
     void json_insert_all(jsobject_T &obj)                                      \
     {                                                                          \
         for (const auto &ele : json_insert_funcs_)                             \
