@@ -85,6 +85,7 @@ namespace qutility {
 			[[nodiscard]] auto cat(intptr_t const& pos) const { return detail::cat(base_ptr_, single_size_, N_hist_, N_record_, pos); }
 			[[nodiscard]] auto single_size() const { return single_size_; }
 			[[nodiscard]] auto N_hist() const { return N_hist_; }
+			[[nodiscard]] auto N_record() const { return N_record_; }
 
 		protected:
 			T* const base_ptr_;
