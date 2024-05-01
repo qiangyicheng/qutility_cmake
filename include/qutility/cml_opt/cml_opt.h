@@ -123,7 +123,7 @@ public:                                                                         
     type name;                                                                               \
                                                                                              \
 protected:                                                                                   \
-    constexpr static const char *name##_tag = cml_token;                                     \
+    constexpr static const char *name##_tag = tag;                                           \
     void name##_get_func(const vm_T &vm, bool if_override)                                   \
     {                                                                                        \
         auto val = vm[name##_tag].as<type>();                                                \
@@ -148,24 +148,30 @@ protected:                                                                      
         }                                                                                    \
     }
 
-#define QUTILITY_REGISTER_OPTION_IMPL_REGISTER_FUNCTION_WITH_DEFAULT(type, name, cml_token, default, desc) \
-    void name##_register_func(osd_T &osd) const                                                            \
-    {                                                                                                      \
-        boost::shared_ptr<od_T> opt(new od_T(                                                              \
-            cml_token,                                                                                     \
-            boost::program_options::value<type>()->default_value(default),                                 \
-            desc));                                                                                        \
-        osd.add(opt);                                                                                      \
+#define QUTILITY_REGISTER_OPTION_IMPL_REGISTER_FUNCTION_WITH_DEFAULT(type, name, cml_token, default, desc)              \
+    void name##_register_func(osd_T &osd) const                                                                         \
+    {                                                                                                                   \
+        boost::shared_ptr<od_T> opt(new od_T(                                                                           \
+            cml_token,                                                                                                  \
+            boost::program_options::value<type>()->default_value(default),                                              \
+            desc));                                                                                                     \
+        auto name##_key = opt->key(name##_tag);                                                                         \
+        if (name##_key != std::string(name##_tag))                                                                      \
+            throw std::invalid_argument("tag " + std::string(name##_tag) + " is different from the key " + name##_key); \
+        osd.add(opt);                                                                                                   \
     }
 
-#define QUTILITY_REGISTER_OPTION_IMPL_REGISTER_FUNCTION_REQUIRED(type, name, cml_token, desc) \
-    void name##_register_func(osd_T &osd) const                                               \
-    {                                                                                         \
-        boost::shared_ptr<od_T> opt(new od_T(                                                 \
-            cml_token,                                                                        \
-            boost::program_options::value<type>()->required(),                                \
-            desc));                                                                           \
-        osd.add(opt);                                                                         \
+#define QUTILITY_REGISTER_OPTION_IMPL_REGISTER_FUNCTION_REQUIRED(type, name, cml_token, desc)                           \
+    void name##_register_func(osd_T &osd) const                                                                         \
+    {                                                                                                                   \
+        boost::shared_ptr<od_T> opt(new od_T(                                                                           \
+            cml_token,                                                                                                  \
+            boost::program_options::value<type>()->required(),                                                          \
+            desc));                                                                                                     \
+        auto name##_key = opt->key(name##_tag);                                                                         \
+        if (name##_key != std::string(name##_tag))                                                                      \
+            throw std::invalid_argument("tag " + std::string(name##_tag) + " is different from the key " + name##_key); \
+        osd.add(opt);                                                                                                   \
     }
 
 #define QUTILITY_REGISTER_OPTION_IMPL_STUB(class_name, name) \
