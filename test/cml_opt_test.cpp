@@ -11,9 +11,9 @@ class TestOptions : public qutility::cml_opt::OptionsBase
 {
 public:
     QUTILITY_REGISTER_OPTION_INITIALIZE(TestOptions);
-    QUTILITY_REGISTER_OPTION_WITH_DEFAULT(TestOptions, std::string, str, "string", "str", "test string", "test string");
-    QUTILITY_REGISTER_OPTION_WITH_DEFAULT(TestOptions, double, d, "double", "d", 0.1, "test double");
-    QUTILITY_REGISTER_OPTION_WITH_DEFAULT(TestOptions, size_t, i, "integer", "i", 233, "test integer");
+    QUTILITY_REGISTER_OPTION_WITH_DEFAULT(TestOptions, std::string, str, "str", "str,s", "test string", "test string");
+    QUTILITY_REGISTER_OPTION_WITH_DEFAULT(TestOptions, double, d, "double", "double,d", 0.1, "test double");
+    QUTILITY_REGISTER_OPTION_WITH_DEFAULT(TestOptions, size_t, i, "integer", "integer,i", 233, "test integer");
 };
 
 TEST(CmlOpt, ReadOptions)
