@@ -227,6 +227,8 @@ namespace qutility
                 original_box_discretization_ = original_box_length_ / this->original_box_.box_size_;
                 compressed_box_length_ = this->shuffle_as_compress_index(original_box_length_);
                 compressed_box_discretization_ = compressed_box_length_ / this->compressed_box_.box_size_;
+                box_length_ = compressed_box_length_;
+                box_discretization_ = compressed_box_discretization_;
             }
             /* data */
             c_array<length_val_t, dim_> original_box_length_;
