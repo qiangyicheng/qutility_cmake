@@ -40,6 +40,8 @@ namespace qutility {
 			DArrayGPU(std::size_t S, int device) : ArrayGPUSelectDevice(device), size_(S), data_(S, T()), pointer_(thrust::raw_pointer_cast(&(data_[0]))) {}
 			DArrayGPU(const T& val, std::size_t S, int device) : ArrayGPUSelectDevice(device), size_(S), data_(S, val), pointer_(thrust::raw_pointer_cast(&(data_[0]))) {}
 			template<typename OtherT, typename OtherAlloc>
+			DArrayGPU(const std::vector<OtherT, OtherAlloc>& v, int device) : ArrayGPUSelectDevice(device), size_(v.size()), data_(utilities::duplicate(v, v.size())), pointer_(thrust::raw_pointer_cast(&(data_[0]))) {}
+			template<typename OtherT, typename OtherAlloc>
 			DArrayGPU(const std::vector<OtherT, OtherAlloc>& v, std::size_t S, int device) : ArrayGPUSelectDevice(device), size_(S), data_(utilities::duplicate(v, S)), pointer_(thrust::raw_pointer_cast(&(data_[0]))) {}
 			DArrayGPU(const DArrayGPU& rhs) :ArrayGPUSelectDevice(rhs), size_(rhs.size_), data_(rhs.data_), pointer_(thrust::raw_pointer_cast(&(data_[0]))) {}
 			DArrayGPU(DArrayGPU&& rhs) :ArrayGPUSelectDevice(rhs), size_(rhs.size_), data_(std::move(rhs.data_)), pointer_(thrust::raw_pointer_cast(&(data_[0]))) {}
@@ -80,6 +82,8 @@ namespace qutility {
 			DArrayDDRPinned() = delete;
 			DArrayDDRPinned(std::size_t S) :DArrayDDR<T, A>(S) { register_host_memory(); }
 			DArrayDDRPinned(const T& val, std::size_t S) :DArrayDDR<T, A>(val, S) { register_host_memory(); }
+			template<typename OtherT, typename OtherAlloc>
+			DArrayDDRPinned(const std::vector<OtherT, OtherAlloc>& v) : DArrayDDR<T, A>(v, v.size()) { register_host_memory(); }
 			template<typename OtherT, typename OtherAlloc>
 			DArrayDDRPinned(const std::vector<OtherT, OtherAlloc>& v, std::size_t S) : DArrayDDR<T, A>(v, S) { register_host_memory(); }
 			DArrayDDRPinned(const DArrayDDRPinned& rhs) : DArrayDDR<T, A>(rhs) { register_host_memory(); }
