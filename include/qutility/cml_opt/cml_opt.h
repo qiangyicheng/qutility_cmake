@@ -255,7 +255,8 @@ public:                                                                        \
         }                                                                      \
         os << std::endl;                                                       \
     }                                                                          \
-    void print_all_cml_style(std::ostream &os)                                 \
+    template <typename OS_T>                                                   \
+    void print_all_cml_style(OS_T &os)                                         \
     {                                                                          \
         for (const auto &ele : str_funcs_)                                     \
         {                                                                      \
