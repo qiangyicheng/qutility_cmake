@@ -431,5 +431,30 @@ namespace qutility
 			}
 			return ans;
 		}
+
+		template <typename opT, typename T1, size_t M, typename T2>
+		constexpr inline size_t pos_first(c_array<T1, M> const &arr, T2 var)
+		{
+			for (size_t itr = 0; itr < M; ++itr)
+			{
+				if (opT()(arr[itr], var))
+					return itr;
+			}
+			return M;
+		}
+
+		template <typename T, size_t N, typename funcT>
+		constexpr c_array<T, N> make_array(funcT f)
+		{
+			c_array<T, N> ans{};
+			if constexpr (N > 0)
+			{
+				for (size_t itr = 0; itr < N; ++itr)
+				{
+					ans[itr] = f(itr);
+				}
+			}
+			return ans;
+		}
 	}
 }
