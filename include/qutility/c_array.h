@@ -329,10 +329,11 @@ namespace qutility
 			using AnsValT = decltype(std::declval<T>() + std::declval<U>());
 			using AnsT = c_array<AnsValT, N>;
 			AnsT ans{};
-			for (size_t itr = 0; itr < N; ++itr)
-			{
-				ans[itr] = a[itr] + b[itr];
-			}
+			if constexpr (N != 0)
+				for (size_t itr = 0; itr < N; ++itr)
+				{
+					ans[itr] = a[itr] + b[itr];
+				}
 			return ans;
 		}
 
@@ -342,10 +343,11 @@ namespace qutility
 			using AnsValT = decltype(std::declval<T>() - std::declval<U>());
 			using AnsT = c_array<AnsValT, N>;
 			AnsT ans{};
-			for (size_t itr = 0; itr < N; ++itr)
-			{
-				ans[itr] = a[itr] - b[itr];
-			}
+			if constexpr (N != 0)
+				for (size_t itr = 0; itr < N; ++itr)
+				{
+					ans[itr] = a[itr] - b[itr];
+				}
 			return ans;
 		}
 
@@ -355,10 +357,11 @@ namespace qutility
 			using AnsValT = decltype(std::declval<T>() * std::declval<U>());
 			using AnsT = c_array<AnsValT, N>;
 			AnsT ans{};
-			for (size_t itr = 0; itr < N; ++itr)
-			{
-				ans[itr] = a[itr] * b[itr];
-			}
+			if constexpr (N != 0)
+				for (size_t itr = 0; itr < N; ++itr)
+				{
+					ans[itr] = a[itr] * b[itr];
+				}
 			return ans;
 		}
 
@@ -368,10 +371,11 @@ namespace qutility
 			using AnsValT = decltype(std::declval<T>() / std::declval<U>());
 			using AnsT = c_array<AnsValT, N>;
 			AnsT ans{};
-			for (size_t itr = 0; itr < N; ++itr)
-			{
-				ans[itr] = a[itr] / b[itr];
-			}
+			if constexpr (N != 0)
+				for (size_t itr = 0; itr < N; ++itr)
+				{
+					ans[itr] = a[itr] / b[itr];
+				}
 			return ans;
 		}
 
