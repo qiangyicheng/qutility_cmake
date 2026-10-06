@@ -101,7 +101,8 @@ namespace qutility
             }
             else if constexpr (std::is_constructible<boost::json::string, ResultT>::value || std::is_convertible<boost::json::string, ResultT>::value)
             {
-                return ResultT(obj.at(obj_tag).get_string());
+                const auto& value = obj.at(obj_tag).get_string();
+                return ResultT(value.data(), value.size());
             }
             else if constexpr (std::is_same<bool, ResultT>::value)
             {
